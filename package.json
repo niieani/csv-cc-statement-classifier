@@ -1,0 +1,62 @@
+{
+  "name": "csv-cc-statement-classifier",
+  "version": "1.0.0",
+  "description": "Add categories to your credit card statements",
+  "main": "dist/index.js",
+  "files": [
+    "bin/",
+    "dist/"
+  ],
+  "scripts": {
+    "clean": "rimraf dist",
+    "lint": "eslint src test",
+    "check": "npm run lint -s && dependency-check package.json --entry src",
+    "watch": "watch 'npm run build' src test",
+    "test": "babel-node test/*.js | tspec",
+    "prebuild": "npm run check -s && npm run clean -s",
+    "build": "babel --optional runtime src -d dist",
+    "postbuild": "npm run test -s",
+    "coverage": "babel-node node_modules/.bin/isparta cover test/*.js",
+    "coveralls": "npm run coverage -s && coveralls < coverage/lcov.info",
+    "postcoveralls": "rimraf ./coverage",
+    "prepublish": "npm run build -s",
+    "deploy": "git pull --rebase origin master && git push origin master",
+    "patch": "npm version patch && npm publish",
+    "minor": "npm version minor && npm publish",
+    "major": "npm version major && npm publish",
+    "postpublish": "git push origin master --follow-tags",
+    "toc": "doctoc --github --title \"# Changelog\" CHANGELOG.md",
+    "go": "node dist/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com//money-project.git"
+  },
+  "keywords": [
+    "node"
+  ],
+  "author": "Bazyli Brzóska <bazyli.brzoska@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/csv-cc-statement-classifier/issues"
+  },
+  "homepage": "https://github.com/csv-cc-statement-classifier#readme",
+  "devDependencies": {
+    "eslint": "*",
+    "babel-eslint": "*",
+    "babel": "*",
+    "coveralls": "*",
+    "isparta": "*",
+    "tape": "*",
+    "tap-spec": "*",
+    "rimraf": "*",
+    "dependency-check": "*",
+    "watch": "*",
+    "doctoc": "*"
+  },
+  "dependencies": {
+    "babel-runtime": "*",
+    "fast-csv": "^0.6.0",
+    "yargs": "^3.24.0"
+  }
+}
